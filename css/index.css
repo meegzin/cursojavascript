@@ -140,3 +140,8 @@ button[disabled=disabled], button:disabled {
 .form-invalido{
 	color: lightcoral;
 }
+
+.fadeOut{
+	opacity: 0;
+	transition: 1s;
+}

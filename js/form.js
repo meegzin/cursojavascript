@@ -10,8 +10,7 @@ botaoAdicionar.addEventListener('click', function(event){
     var erros = validaPaciente(paciente);
 
     if(erros.length>0){
-        var dadoInvalido = document.querySelector('#dado-invalido');
-        dadoInvalido.textContent = erros;
+        exibeMensagensErro(erros);
         return;
     }
 
@@ -19,7 +18,22 @@ botaoAdicionar.addEventListener('click', function(event){
     tabela.appendChild(pacienteTr);
 
     form.reset();
+    var dadoInvalido = document.querySelector('#dado-invalido');
+    dadoInvalido.innerHTML = ''
 });
+
+function exibeMensagensErro(erros){
+    var ul = document.querySelector('#dado-invalido');
+    ul.innerHTML = ""
+
+    erros.forEach(function(erro){
+        var li = document.createElement("li");
+        li.textContent = erro;
+        ul.appendChild(li);
+    });
+}
+
+//Essa função coloca a mensagem de erro no HTML
 
 function obtemPacientedoFormulario(form){
 
@@ -34,6 +48,8 @@ function obtemPacientedoFormulario(form){
     return paciente;
 }
 
+//Essa função obtém os dados do paciente quando preenchido o formulário
+
 function montaTr(paciente){
     var pacienteTr = document.createElement("tr");
     pacienteTr.classList.add('paciente');
@@ -47,6 +63,8 @@ function montaTr(paciente){
     return pacienteTr;
 }
 
+//Essa função monta a Tr no HTML
+
 function montaTd(dado, classe){
     var td = document.createElement('td');
     td.textContent = dado;
@@ -55,17 +73,24 @@ function montaTd(dado, classe){
     return td;
 }
 
+//Essa função monta a Td
 
 function validaPaciente(paciente){
 
     var erros = [];
 
-    if(validaPeso(paciente.peso)) erros.push('Peso inválido');
+    if(paciente.nome.length == 0) erros.push('Nome não pode estar em branco');
+
+    if(!validaPeso(paciente.peso)) erros.push('Peso inválido');
+    if(paciente.peso.length == 0) erros.push('Peso não pode estar em branco');
 
     if(!validaAltura(paciente.altura)) erros.push('Altura inválida');
+    if(paciente.altura.length == 0) erros.push('Altura não pode estar em branco');
+
+    if(paciente.gordura.length) erros.push('Gordura não pode estar em branco');
 
     return erros;
 }
 
-
+//Essa função verifica se os dados do formulário estão válidos
 
